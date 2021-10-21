@@ -19,9 +19,10 @@ struct Check{
 
 class CheckBook{
 public:
-    CheckBook(){balance=0;numOfChecks=0;checkBookSize=4;}
-    CheckBook(float x){balance=x;numOfChecks=0;checkBookSize=4;}
-    Check* checkPtr;
+    CheckBook(){balance=0;numOfChecks=0;checkBookSize=4;CheckArray[4];}
+    CheckBook(float x){balance=x;numOfChecks=0;checkBookSize=4;CheckArray[4];}
+    Check* checkPtr=CheckArray;
+    bool writeCheck(Check C_amount);
     float getBalance(){return balance;}
     void setBalance(float x){balance=x;}
     double getLastDeposit(){return lastDeposit;}
@@ -33,6 +34,7 @@ public:
     void operator =(CheckBook x);
     void deposit(float x){balance=balance+x;}
 private:
+    Check CheckArray[4];
     float balance;
     double lastDeposit;
     int numOfChecks;
@@ -69,4 +71,19 @@ void CheckBook::operator =(CheckBook x){
     lastDeposit=x.lastDeposit;
     numOfChecks=x.numOfChecks;
     checkBookSize=x.checkBookSize;
+}
+bool CheckBook::writeCheck(Check C_amount){
+    if(C_amount>balance){
+        cout<<"There is not enough money in your balance"<<endl;
+        return false;
+    }
+    else{
+        CheckArray[numOfChecks].CheckAmount=C_amount.CheckAmount;
+        CheckArray[numOfChecks].CheckNum=numOfChecks;
+        balance=balance-C_amount.CheckAmount;
+        CheckArray[numOfChecks].CheckMemo=rand();
+        numOfChecks++;
+
+
+    }
 }
